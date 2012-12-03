@@ -31,6 +31,12 @@ class Indicator:
 			item.show()
 			self.menu.append(item)
 
+		item = Gtk.MenuItem()
+		item.set_label('Exit')
+		item.connect('activate', self.exit)
+		item.show()
+		self.menu.append(item)
+
 		self.menu.show()
 		self.indicator.set_menu(self.menu)
 

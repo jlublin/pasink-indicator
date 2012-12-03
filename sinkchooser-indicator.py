@@ -33,13 +33,14 @@ class Indicator:
 
 		self.menu.show()
 		self.indicator.set_menu(self.menu)
-		
+
 
 	def GetSinks(self):
 		pactl_output = check_output(['pactl', 'list'])
 		self.sinks = re.findall('Sink #.*', pactl_output)
 
 	def exit(self, event):
+		print event.get_label()
 		Gtk.main_quit()
 
 	def main(self):

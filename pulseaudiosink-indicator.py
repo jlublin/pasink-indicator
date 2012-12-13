@@ -27,13 +27,13 @@ class Indicator:
 		for sink in self.sinks:
 			item = Gtk.MenuItem()
 			item.set_label(sink)
-			item.connect('activate', self.exit)
+			item.connect('activate', self.OnSink)
 			item.show()
 			self.menu.append(item)
 
 		item = Gtk.MenuItem()
 		item.set_label('Exit')
-		item.connect('activate', self.exit)
+		item.connect('activate', self.OnExit)
 		item.show()
 		self.menu.append(item)
 
@@ -48,8 +48,11 @@ class Indicator:
 	def SetSink(self, sink):
 		call(['pacmd', 'set-default-sink', sink[6:]])
 
-	def exit(self, event):
-		print event.get_label()
+	def OnSink(self, event):
+		sink = event.get_label()
+		self.SetSink(sink)
+
+	def OnExit(self, event):
 		Gtk.main_quit()
 
 	def main(self):

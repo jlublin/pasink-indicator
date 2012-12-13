@@ -1,4 +1,4 @@
-# For now this will use pactl until I have figured out how to use libpulseaudio
+# For now this will use pactl and pacmd until I have figured out how to use libpulseaudio
 
 # >>> from subprocess import check_output
 # >>> a = check_output(['ls', '-l'])
@@ -6,7 +6,7 @@
 from gi.repository import Gtk, GLib
 from gi.repository import AppIndicator3
 
-from subprocess import check_output
+from subprocess import check_output,call
 import re
 
 class Indicator:
@@ -44,6 +44,9 @@ class Indicator:
 	def GetSinks(self):
 		pactl_output = check_output(['pactl', 'list'])
 		self.sinks = re.findall('Sink #.*', pactl_output)
+
+	def SetSink(self, sink):
+		call(['pacmd', 'set-default-sink', sink[6:]])
 
 	def exit(self, event):
 		print event.get_label()
